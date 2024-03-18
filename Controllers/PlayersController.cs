@@ -36,7 +36,11 @@ namespace LPLWebApp.Controllers
 
             ViewBag.SearchString = searchString;
 
-            return View(playerIgn);
+            string temp = searchString as string ?? "";
+
+            var filteredIgns = playerIgn.Where(Ign => Ign.StartsWith(temp, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            return View(filteredIgns);
         }
 
         public async Task<IActionResult> DisplayPlayerSearchResult(String searchString)
