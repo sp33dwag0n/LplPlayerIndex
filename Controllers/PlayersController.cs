@@ -38,17 +38,17 @@ namespace LPLWebApp.Controllers
 
             string temp = searchString as string ?? "";
 
-            List<string> filteredIgns = new List<string>();
+            ViewBag.filteredIgns = new List<string>();
 
             foreach (string Ign in playerIgn)
             {
                 if (Ign.StartsWith(temp, StringComparison.OrdinalIgnoreCase))
                 {
-                    filteredIgns.Add(Ign);
+                    ViewBag.filteredIgns.Add(Ign);
                 }
             }
 
-            return View(filteredIgns);
+            return View(searchString);
         }
 
         public async Task<IActionResult> DisplayPlayerSearchResult(String searchString)

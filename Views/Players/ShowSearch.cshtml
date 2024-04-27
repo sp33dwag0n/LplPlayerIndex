@@ -11,14 +11,10 @@
                 <label for="searchString" class="control-label"></label>
                 <input name="searchString" id="searchInput" class="form-control" autocomplete="off" list="suggestionsList" />
                 <datalist id="suggestionsList">
-                    @{
-                        string searchString = ViewBag.SearchString as string ?? "";
-                        var filteredIgns = Model.Where(Ign => Ign.StartsWith(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
-                    }
-                    @foreach (string playerName in filteredIgns)
-                    {
-                        <option value="@playerName"></option>
-                    }
+                    @foreach (string playerName in ViewBag.filteredIgns)
+                        {
+                            <option value="@playerName"></option>
+                        }
                 </datalist>
             </div>
             <div class="form-group">
