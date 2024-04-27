@@ -27,7 +27,7 @@ namespace LPLWebApp.Controllers
 
         public async Task<IActionResult> ShowSearch(string searchString)
         {
-            List<string> teams = new List<string>()
+            List<string> teams = new List<string>() 
             {"BLG", "JDG", "TES", "FPX", "NIP", "IG", "WE", "AL", "WBG", "OMG", "LNG", "TT", "RA", "RNG", "LGD", "EDG", "UP"};
 
             ViewBag.Teams = new SelectList(teams);
@@ -38,19 +38,27 @@ namespace LPLWebApp.Controllers
 
             string temp = searchString as string ?? "";
 
-            var filteredIgns = playerIgn.Where(Ign => Ign.StartsWith(temp, StringComparison.OrdinalIgnoreCase)).ToList();
+            List<string> filteredIgns = new List<string>();
+
+            foreach (string Ign in playerIgn)
+            {
+                if (Ign.StartsWith(temp, StringComparison.OrdinalIgnoreCase))
+                {
+                    filteredIgns.Add(Ign);
+                }
+            }
 
             return View(filteredIgns);
         }
 
         public async Task<IActionResult> DisplayPlayerSearchResult(String searchString)
         {
-            return View("Index", await _context.Player.Where(j => j.Ign.Contains(searchString)).ToListAsync());
+            return View("Index", await _context.Player.Where(j => j.Ign.StartsWith(searchString)).ToListAsync());
         }
 
         public async Task<IActionResult> DisplayTeamSearchResult(String SearchPhrase)
         {
-            return View("Index", await _context.Player.Where(j => j.Team.Contains(SearchPhrase)).ToListAsync());
+            return View("Index", await _context.Player.Where(j => j.Team.StartsWith(SearchPhrase)).ToListAsync());
         }
 
         // GET: Players/Details/5
